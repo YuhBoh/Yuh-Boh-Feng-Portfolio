@@ -1,20 +1,157 @@
 body {
   margin: 0;
+  background-color: black;
 }
 
 .header {
-  border-color: red;
-  border-width: 1px;
-  border-style: solid;
+  position: absolute;
+  width: 100vw;
+  height: 150px;
   text-align: center;
+  background-image: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%), url('images/moon.jpeg');
+  background-position: 0% 60%;
+  background-size: cover;
 }
 
 .title {
+  color: white;
+  padding-top: 40px;
+  font-family: 'Nosifer', sans-serif;
 }
 
-.form {
-  border-color: red;
-  border-width: 1px;
-  border-style: solid;
+.form-container {
+  position: absolute;
+  align-items: center;
+  top: 50%;
+  left: 50%;
+  min-height: 150px;
+  min-width: 103px;
   text-align: center;
+  border: 1px solid rgb(255, 136, 0);
+  transform: translate(-50%, -50%);
+}
+
+.u-row {
+  margin-top: 30px;
+  margin-left: 20px;
+  margin-right: 20px;
+  color: white;
+}
+
+.p-row {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
+  color: white;
+}
+
+.row-submit {
+  height: 10px;
+}
+
+.p-input {
+  margin-left: 3px;
+}
+
+.btn {
+  height: 30px;
+  width: 100px;
+  background-color: rgb(255, 136, 0);
+  border: none;
+  border-radius: 20px;
+  box-shadow: -1px 3px grey;
+}
+
+.btn:hover {
+  background-color: rgb(255, 94, 0);
+  cursor: pointer;
+}
+
+.btn:active {
+  margin-left: -3px;
+  margin-top: 3px;
+  box-shadow: 0px 0px grey;
+  background-color: rgb(131, 48, 0);
+}
+
+.img-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  max-width: 600px;
+  max-height: 450px;
+}
+
+.gradient {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%,rgb(0, 0, 0, 1) 100%)
+}
+
+.pump {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.dab {
+  position: absolute;
+  width: 100px;
+  left: 50%;
+  top: 33%;
+  transform: translate(-50%, -50%);
+  border-color: black;
+  border-width: 5px;
+  border-style: solid;
+}
+
+.ghost {
+  position: absolute;
+  width: 50px;
+  right: 28%;
+  bottom: -33%;
+}
+
+.hand {
+  position: absolute;
+  right: 0;
+  bottom: -36%;
+  max-width: 600px;
+}
+
+@keyframes moveUpGhost {
+  0% {
+      transform: translateY(0);
+    }
+  100% {
+      transform: translateY(-580px);
+  }
+}
+
+@keyframes moveUpHand {
+  0% {
+    transform: translateY(230px);
+  }
+  100% {
+    transform: translateY(-360px);
+  }
+}
+
+@media screen and (min-width: 1240px) {
+  .hand {
+    animation: moveUpHand 5s ease-in-out;
+    transform: translateY(-360px);
+    animation-delay: 1s;
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .ghost {
+    animation: moveUpGhost 5s ease-in-out;
+    transform: translateY(-580px);
+    animation-delay: 1s;
+  }
 }
