@@ -4,7 +4,6 @@ body {
 }
 
 .header {
-  position: absolute;
   width: 100vw;
   height: 150px;
   text-align: center;
@@ -20,16 +19,18 @@ body {
 }
 
 .form-container {
-  position: absolute;
+  display: flex;
   align-items: center;
-  top: 50%;
-  left: 50%;
-  min-height: 150px;
-  min-width: 103px;
+  justify-content: center;
+  max-height: 220px;
+  max-width: 300px;
+
   text-align: center;
   border: 1px solid rgb(255, 136, 0);
-  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  box-shadow: -3px 3px 7px grey;
 }
+
 
 .u-row {
   margin-top: 30px;
