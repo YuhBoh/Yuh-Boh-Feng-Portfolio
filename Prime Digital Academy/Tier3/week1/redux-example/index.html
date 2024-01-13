@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Favorite Colors!</title>
+  <script src="https://unpkg.com/redux@latest/dist/redux.js"></script>
+</head>
+<body>
+  <script>
+    function addColor(value) {
+      return { //an action; can be in diff forms
+        type: "ADD",
+        color: value
+      }
+    }
+
+    function removeColor(value) {
+      return { //an action; can be in diff forms
+        type: "REMOVE",
+        color: value
+      }
+    }
+
+    // reducer
+    function favoriteColors(state, action) {
+      if (state === undefined) {
+        state = [];
+      }
+
+      if (action.type === "ADD") {
+        return state.concat(action.color);
+      } else if (action.type === "REMOVE") {
+        return state.filter(function(item) {
+          return item !== action.color;
+        });
+      } else {
+        return state;
+      }
+    }
+    // In this case, the predicate function takes a single parameter item, which represents each element of the state array. The function returns true if the item is not equal to action.color, which means the element should be included in the new array. If the item is equal to action.color, the function returns false, which means the element should be excluded from the new array.
+
+    // Therefore, the.filter(function (item) { return item !== action.color }) expression creates a new array that contains all elements of the original state array except for the one that matches the action.color value.
+
+    // store
+    let store = Redux.createStore(favoriteColors);
+  </script>
+</body>
+</html>
