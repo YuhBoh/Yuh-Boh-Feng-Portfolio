@@ -13,12 +13,23 @@ renderer.setSize(innerWidth, innerHeight);
 renderer.setPixelRatio(devicePixelRatio);
 document.body.appendChild(renderer.domElement);
 
-const geometry = new THREE.BoxGeometry(1, 1, 1);
+// CREATING CUBE
+const geometry = new THREE.BoxGeometry(1, 1, 1);// width, length, height
 const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-const mesh = new THREE.Mesh(geometry, material);
-scene.add(mesh);
+const cube = new THREE.Mesh(geometry, material);
+scene.add(cube);
 
-camera.position.z = 5;
+camera.position.z = 5; // how far away from center of 3D Model
+
+// CREATING PLANE
+const planeGeometry = new THREE.PlaneGeometry(5, 5, 10, 10);// width, height, width segment, height segment
+const planeMaterial = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+scene.add(planeMesh);
+
+
+
+
 
 function animate() {
   requestAnimationFrame(animate);
