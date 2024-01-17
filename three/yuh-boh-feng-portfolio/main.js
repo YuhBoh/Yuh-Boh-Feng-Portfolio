@@ -22,13 +22,27 @@ document.body.appendChild(renderer.domElement);
 // CAMERA POSITION
 camera.position.z = 5; // how far away from center of 3D Model
 
-// CREATING PLANE
+// 1 - CREATING PLANE
 const planeGeometry = new THREE.PlaneGeometry(5, 5, 10, 10);// width, height, width segment, height segment
-const planeMaterial = new THREE.MeshPhongMaterial({ 
-  color: 0xff0000, 
-  side: THREE.DoubleSide }); // color side red, color both sides red.
+const planeMaterial = new THREE.MeshPhongMaterial({
+  color: 0xff0000,
+  side: THREE.DoubleSide, // color side red, color both sides red.
+  flatShading: true,
+});
 const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
 scene.add(planeMesh);
+
+// 1 - a CHANGING PLANE DEPTHS
+console.log(planeMesh.geometry.attributes.position.array);
+
+const { array } = planeMesh.geometry.attributes.position;
+for (let i = 0; i < array.length; i += 3) {
+  const x = array[i];
+  const y = array[i + 1];
+  const z = array[i + 2];
+
+  array[i + 2] = z + Math.random();
+}
 
 // CREATING LIGHT
 const light = new THREE.DirectionalLight(
