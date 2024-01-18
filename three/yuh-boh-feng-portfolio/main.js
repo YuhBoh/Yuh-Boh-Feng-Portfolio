@@ -1,4 +1,14 @@
 import * as THREE from "three";
+import * as dat from 'dat.gui';
+
+// CREATE DAT.GUI
+const gui = new dat.GUI();
+const world = {
+  plane: {
+    width: 10
+  }
+};
+gui.add(world.plane, 'width', 1, 500)
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -23,7 +33,7 @@ document.body.appendChild(renderer.domElement);
 camera.position.z = 5; // how far away from center of 3D Model
 
 // 1 - CREATING PLANE
-const planeGeometry = new THREE.PlaneGeometry(5, 5, 10, 10);// width, height, width segment, height segment
+const planeGeometry = new THREE.PlaneGeometry(10, 10, 10, 10);// width, height, width segment, height segment
 const planeMaterial = new THREE.MeshPhongMaterial({
   color: 0xff0000,
   side: THREE.DoubleSide, // color side red, color both sides red.
