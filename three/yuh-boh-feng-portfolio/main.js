@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import {GUI} from 'dat.gui';
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -13,6 +14,9 @@ const renderer = new THREE.WebGLRenderer();
 renderer.setSize(innerWidth, innerHeight);
 renderer.setPixelRatio(devicePixelRatio);
 document.body.appendChild(renderer.domElement);
+
+// CAMERA CONTROL
+new OrbitControls(camera, renderer.domElement);
 
 // CREATING CUBE
 // const geometry = new THREE.BoxGeometry(1, 1, 1);// width, length, height
@@ -47,15 +51,19 @@ for (let i = 0; i < array.length; i += 3) {
   array[i + 2] = z + Math.random();
 }
 
-// CREATING LIGHT
-const light = new THREE.DirectionalLight(
-  0xffffff, 1); // white, max brightness;
+// CREATING LIGHT/BACKLIGHT
+const light = new THREE.DirectionalLight(0xffffff, 1); // white, max brightness;
 light.position.set(0, 0, 1); // x, y, in front of object;
 scene.add(light);
+
+const backlight = new THREE.DirectionalLight(0xffffff, 1); // white, max brightness;
+backlight.position.set(0, 0, -1); // x, y, in front of object;
+scene.add(backlight);
 
 // CREATE DAT.GUI
 const gui = new GUI();
 const planeFolder = gui.addFolder('Plane');
+planeFolder.open();
 console.log(planeMesh, "PLANEMESH"); //To look for width;
 console.log(planeMesh.geometry.parameters.width, "WIDTH");
 
@@ -63,12 +71,9 @@ const planeParameters = planeMesh.geometry.parameters;
 console.log(planeParameters, "planeWIDTH");
 
 planeFolder.add(planeParameters, "width", 1, 20).onChange(generatePlane);
-
 planeFolder.add(planeParameters, "height", 1, 20).onChange(generatePlane);
-
-planeFolder.add(planeParameters, "widthSegments", 1, 20).onChange(generatePlane);
-
-planeFolder.add(planeParameters, "heightSegments", 1, 20).onChange(generatePlane);
+planeFolder.add(planeParameters, "widthSegments", 1, 50).onChange(generatePlane);
+planeFolder.add(planeParameters, "heightSegments", 1, 50).onChange(generatePlane);
 
 function generatePlane() {
   planeMesh.geometry.dispose();
@@ -89,15 +94,12 @@ function generatePlane() {
   };
 };
 
-planeFolder.open();
-
 // ANIMATE MESH
 function animate() {
   requestAnimationFrame(animate); // animation calls on itself
   
   // cube.rotation.x += 0.01; // rotate cube on x axis
   // cube.rotation.y += 0.01; // rotate cube on y axis
-
   // planeMesh.rotation.x += 0.01; // rotate plane on x axis
 
   renderer.render(scene, camera); // animate now
