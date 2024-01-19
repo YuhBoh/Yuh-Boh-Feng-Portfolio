@@ -1,14 +1,5 @@
 import * as THREE from "three";
-import * as dat from 'dat.gui';
-
-// CREATE DAT.GUI
-const gui = new dat.GUI();
-const world = {
-  plane: {
-    width: 10
-  }
-};
-gui.add(world.plane, 'width', 1, 500)
+import {GUI} from 'dat.gui';
 
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(
@@ -37,10 +28,12 @@ const planeGeometry = new THREE.PlaneGeometry(10, 10, 10, 10);// width, height, 
 const planeMaterial = new THREE.MeshPhongMaterial({
   color: 0xff0000,
   side: THREE.DoubleSide, // color side red, color both sides red.
-  flatShading: true,
+  flatShading: true
 });
 const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
 scene.add(planeMesh);
+
+console.log(planeMesh.geometry);
 
 // 1 - a CHANGING PLANE DEPTHS
 console.log(planeMesh.geometry.attributes.position.array);
@@ -59,6 +52,89 @@ const light = new THREE.DirectionalLight(
   0xffffff, 1); // white, max brightness;
 light.position.set(0, 0, 1); // x, y, in front of object;
 scene.add(light);
+
+// CREATE DAT.GUI
+const gui = new GUI();
+const planeFolder = gui.addFolder('Plane');
+console.log(planeMesh, "PLANEMESH"); //To look for width;
+console.log(planeMesh.geometry.parameters.width, "WIDTH");
+
+const planeParameters = planeMesh.geometry.parameters;
+console.log(planeParameters, "planeWIDTH");
+
+planeFolder.add(planeParameters, "width", 1, 20).onChange(() => {
+  planeMesh.geometry.dispose();
+  planeMesh.geometry = new THREE.PlaneGeometry(
+    planeParameters.width,
+    planeParameters.height,
+    planeParameters.widthSegments,
+    planeParameters.heightSegments
+  );
+  const { array } = planeMesh.geometry.attributes.position;
+  for (let i = 0; i < array.length; i += 3) {
+    const x = array[i];
+    const y = array[i + 1];
+    const z = array[i + 2];
+
+    array[i + 2] = z + Math.random();
+  }
+});
+
+planeFolder.add(planeParameters, "height", 1, 20).onChange(() => {
+  planeMesh.geometry.dispose();
+  planeMesh.geometry = new THREE.PlaneGeometry(
+    planeParameters.width,
+    planeParameters.height,
+    planeParameters.widthSegments,
+    planeParameters.heightSegments
+  );
+  const { array } = planeMesh.geometry.attributes.position;
+  for (let i = 0; i < array.length; i += 3) {
+    const x = array[i];
+    const y = array[i + 1];
+    const z = array[i + 2];
+
+    array[i + 2] = z + Math.random();
+  }
+});
+
+planeFolder.add(planeParameters, "widthSegments", 1, 20).onChange(() => {
+  planeMesh.geometry.dispose();
+  planeMesh.geometry = new THREE.PlaneGeometry(
+    planeParameters.width,
+    planeParameters.height,
+    planeParameters.widthSegments,
+    planeParameters.heightSegments
+  );
+  const { array } = planeMesh.geometry.attributes.position;
+  for (let i = 0; i < array.length; i += 3) {
+    const x = array[i];
+    const y = array[i + 1];
+    const z = array[i + 2];
+
+    array[i + 2] = z + Math.random();
+  }
+});
+
+planeFolder.add(planeParameters, "heightSegments", 1, 20).onChange(() => {
+  planeMesh.geometry.dispose();
+  planeMesh.geometry = new THREE.PlaneGeometry(
+    planeParameters.width,
+    planeParameters.height,
+    planeParameters.widthSegments,
+    planeParameters.heightSegments
+  );
+  const { array } = planeMesh.geometry.attributes.position;
+  for (let i = 0; i < array.length; i += 3) {
+    const x = array[i];
+    const y = array[i + 1];
+    const z = array[i + 2];
+
+    array[i + 2] = z + Math.random();
+  }
+});
+
+planeFolder.open();
 
 // ANIMATE MESH
 function animate() {
