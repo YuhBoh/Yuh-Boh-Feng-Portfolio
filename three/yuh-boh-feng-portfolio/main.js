@@ -62,7 +62,15 @@ console.log(planeMesh.geometry.parameters.width, "WIDTH");
 const planeParameters = planeMesh.geometry.parameters;
 console.log(planeParameters, "planeWIDTH");
 
-planeFolder.add(planeParameters, "width", 1, 20).onChange(() => {
+planeFolder.add(planeParameters, "width", 1, 20).onChange(generatePlane);
+
+planeFolder.add(planeParameters, "height", 1, 20).onChange(generatePlane);
+
+planeFolder.add(planeParameters, "widthSegments", 1, 20).onChange(generatePlane);
+
+planeFolder.add(planeParameters, "heightSegments", 1, 20).onChange(generatePlane);
+
+function generatePlane() {
   planeMesh.geometry.dispose();
   planeMesh.geometry = new THREE.PlaneGeometry(
     planeParameters.width,
@@ -70,6 +78,7 @@ planeFolder.add(planeParameters, "width", 1, 20).onChange(() => {
     planeParameters.widthSegments,
     planeParameters.heightSegments
   );
+
   const { array } = planeMesh.geometry.attributes.position;
   for (let i = 0; i < array.length; i += 3) {
     const x = array[i];
@@ -77,62 +86,8 @@ planeFolder.add(planeParameters, "width", 1, 20).onChange(() => {
     const z = array[i + 2];
 
     array[i + 2] = z + Math.random();
-  }
-});
-
-planeFolder.add(planeParameters, "height", 1, 20).onChange(() => {
-  planeMesh.geometry.dispose();
-  planeMesh.geometry = new THREE.PlaneGeometry(
-    planeParameters.width,
-    planeParameters.height,
-    planeParameters.widthSegments,
-    planeParameters.heightSegments
-  );
-  const { array } = planeMesh.geometry.attributes.position;
-  for (let i = 0; i < array.length; i += 3) {
-    const x = array[i];
-    const y = array[i + 1];
-    const z = array[i + 2];
-
-    array[i + 2] = z + Math.random();
-  }
-});
-
-planeFolder.add(planeParameters, "widthSegments", 1, 20).onChange(() => {
-  planeMesh.geometry.dispose();
-  planeMesh.geometry = new THREE.PlaneGeometry(
-    planeParameters.width,
-    planeParameters.height,
-    planeParameters.widthSegments,
-    planeParameters.heightSegments
-  );
-  const { array } = planeMesh.geometry.attributes.position;
-  for (let i = 0; i < array.length; i += 3) {
-    const x = array[i];
-    const y = array[i + 1];
-    const z = array[i + 2];
-
-    array[i + 2] = z + Math.random();
-  }
-});
-
-planeFolder.add(planeParameters, "heightSegments", 1, 20).onChange(() => {
-  planeMesh.geometry.dispose();
-  planeMesh.geometry = new THREE.PlaneGeometry(
-    planeParameters.width,
-    planeParameters.height,
-    planeParameters.widthSegments,
-    planeParameters.heightSegments
-  );
-  const { array } = planeMesh.geometry.attributes.position;
-  for (let i = 0; i < array.length; i += 3) {
-    const x = array[i];
-    const y = array[i + 1];
-    const z = array[i + 2];
-
-    array[i + 2] = z + Math.random();
-  }
-});
+  };
+};
 
 planeFolder.open();
 
