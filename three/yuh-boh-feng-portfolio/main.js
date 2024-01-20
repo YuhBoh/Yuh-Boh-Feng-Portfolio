@@ -1,6 +1,7 @@
 import * as THREE from "three";
 import {GUI} from 'dat.gui';
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import gsap from 'gsap';
 
 const raycaster = new THREE.Raycaster();
 const scene = new THREE.Scene();
@@ -53,7 +54,7 @@ for (let i = 0; i < array.length; i += 3) {
 
 const colors = [];
 for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
-  colors.push(1, 0, 0);
+  colors.push(0, 0.19, 0.4); // default plane color
 }
 
 planeMesh.geometry.setAttribute(
@@ -124,21 +125,54 @@ function animate() {
       const { color } = intersects[0].object.geometry.attributes;
 
       // vertice 1
-      color.setX(intersects[0].face.a, 0);
-      color.setY(intersects[0].face.a, 1);
+      color.setX(intersects[0].face.a, 0.1);
+      color.setY(intersects[0].face.a, 0.5);
       color.setZ(intersects[0].face.a, 1);
 
       // vertice 2
-      color.setX(intersects[0].face.b, 0);
-      color.setY(intersects[0].face.b, 1);
+      color.setX(intersects[0].face.b, 0.1);
+      color.setY(intersects[0].face.b, 0.5);
       color.setZ(intersects[0].face.b, 1);
 
       // vertice 3
-      color.setX(intersects[0].face.c, 0);
-      color.setY(intersects[0].face.c, 1);
+      color.setX(intersects[0].face.c, 0.1);
+      color.setY(intersects[0].face.c, 0.5);
       color.setZ(intersects[0].face.c, 1);
 
       intersects[0].object.geometry.attributes.color.needsUpdate = true;
+
+      const initialColor = {
+        r: 0,
+        g: .19,
+        b: .4
+      }
+
+      const hoverColor = {
+        r: 0.1,
+        g: 0.5,
+        b: 0.4
+      }
+      gsap.to(hoverColor, {
+        r: initialColor.r,
+        g: initialColor.g,
+        b: initialColor.b,
+        onUpdate: () => {
+          // vertice 1
+          color.setX(intersects[0].face.a, initialColor.r);
+          color.setY(intersects[0].face.a, initialColor.g);
+          color.setZ(intersects[0].face.a, initialColor.b);
+
+          // vertice 2
+          color.setX(intersects[0].face.b, initialColor.r);
+          color.setY(intersects[0].face.b, initialColor.g);
+          color.setZ(intersects[0].face.b, initialColor.b);
+
+          // vertice 3
+          color.setX(intersects[0].face.c, initialColor.r);
+          color.setY(intersects[0].face.c, initialColor.g);
+          color.setZ(intersects[0].face.c, initialColor.b);
+        }
+      })
     }
 }
 
