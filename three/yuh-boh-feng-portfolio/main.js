@@ -152,10 +152,12 @@ function animate() {
         g: 0.5,
         b: 0.4
       }
+
       gsap.to(hoverColor, {
         r: initialColor.r,
         g: initialColor.g,
         b: initialColor.b,
+
         onUpdate: () => {
           // vertice 1
           color.setX(intersects[0].face.a, initialColor.r);
@@ -163,14 +165,15 @@ function animate() {
           color.setZ(intersects[0].face.a, initialColor.b);
 
           // vertice 2
-          color.setX(intersects[0].face.b, initialColor.r);
-          color.setY(intersects[0].face.b, initialColor.g);
-          color.setZ(intersects[0].face.b, initialColor.b);
+          color.setX(intersects[0].face.b, hoverColor.r);
+          color.setY(intersects[0].face.b, hoverColor.g);
+          color.setZ(intersects[0].face.b, hoverColor.b);
 
           // vertice 3
-          color.setX(intersects[0].face.c, initialColor.r);
-          color.setY(intersects[0].face.c, initialColor.g);
-          color.setZ(intersects[0].face.c, initialColor.b);
+          color.setX(intersects[0].face.c, hoverColor.r);
+          color.setY(intersects[0].face.c, hoverColor.g);
+          color.setZ(intersects[0].face.c, hoverColor.b);
+          color.needsUpdate = true;
         }
       })
     }
