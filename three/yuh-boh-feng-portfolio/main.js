@@ -32,7 +32,6 @@ camera.position.z = 5; // how far away from center of 3D Model
 // 1 - CREATING PLANE
 const planeGeometry = new THREE.PlaneGeometry(10, 10, 10, 10);// width, height, width segment, height segment
 const planeMaterial = new THREE.MeshPhongMaterial({
-  // color: 0xff0000,
   side: THREE.DoubleSide, // color side red, color both sides red.
   flatShading: true,
   vertexColors: true
@@ -119,6 +118,7 @@ function animate() {
   // planeMesh.rotation.x += 0.01; // rotate plane on x axis
 
   renderer.render(scene, camera); // animate now
+
   raycaster.setFromCamera(mouse, camera);
   const intersects = raycaster.intersectObject(planeMesh);
 
@@ -158,6 +158,7 @@ function animate() {
       r: initialColor.r,
       g: initialColor.g,
       b: initialColor.b,
+      duration: 1,
       onUpdate: () => {
         // vertice 1
         color.setX(intersects[0].face.a, hoverColor.r);
@@ -173,6 +174,7 @@ function animate() {
         color.setX(intersects[0].face.c, hoverColor.r);
         color.setY(intersects[0].face.c, hoverColor.g);
         color.setZ(intersects[0].face.c, hoverColor.b);
+        color.needsUpdate = true;
       }
     }); // .to() takes classes or objects
   }
