@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GUI } from 'dat.gui';
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import gsap from "https://esm.sh/gsap";
+import gsap from "gsap";
 
 const raycaster = new THREE.Raycaster();
 const scene = new THREE.Scene();
@@ -140,7 +140,41 @@ function animate() {
     color.setY(intersects[0].face.c, 0.5);
     color.setZ(intersects[0].face.c, 1);
 
-    intersects[0].object.geometry.attributes.color.needsUpdate = true;    
+    intersects[0].object.geometry.attributes.color.needsUpdate = true;
+    
+    const initialColor = {
+      r: 0,
+      g: 0.19,
+      b: 0.4
+    }
+
+    const hoverColor = {
+      r: 0.1,
+      g: 0.5,
+      b: 1
+    }
+
+    gsap.to(hoverColor, {
+      r: initialColor.r,
+      g: initialColor.g,
+      b: initialColor.b,
+      onUpdate: () => {
+        // vertice 1
+        color.setX(intersects[0].face.a, hoverColor.r);
+        color.setY(intersects[0].face.a, hoverColor.g);
+        color.setZ(intersects[0].face.a, hoverColor.b);
+
+        // vertice 2
+        color.setX(intersects[0].face.b, hoverColor.r);
+        color.setY(intersects[0].face.b, hoverColor.g);
+        color.setZ(intersects[0].face.b, hoverColor.b);
+
+        // vertice 3
+        color.setX(intersects[0].face.c, hoverColor.r);
+        color.setY(intersects[0].face.c, hoverColor.g);
+        color.setZ(intersects[0].face.c, hoverColor.b);
+      }
+    }); // .to() takes classes or objects
   }
 }
 
