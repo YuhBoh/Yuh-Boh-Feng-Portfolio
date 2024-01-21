@@ -12,21 +12,7 @@ const planeMaterial = new THREE.MeshPhongMaterial({
 });
 const planeGeometry = new THREE.PlaneGeometry(500, 500, 50, 50); // width, height, width segment, height segment
 const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-
-// CREATE DAT.GUI
-const gui = new GUI();
 const planeParameters = planeMesh.geometry.parameters;
-const planeFolder = gui.addFolder("Plane"); // create menu
-planeFolder.open(); // default open menu
-
-planeFolder.add(planeParameters, "width", 1, 500).onChange(generatePlane); // adds category
-planeFolder.add(planeParameters, "height", 1, 500).onChange(generatePlane);
-planeFolder
-  .add(planeParameters, "widthSegments", 1, 100)
-  .onChange(generatePlane);
-planeFolder
-  .add(planeParameters, "heightSegments", 1, 100)
-  .onChange(generatePlane);
 
 // CREATE PLANE
 function generatePlane() {
@@ -61,7 +47,7 @@ function generatePlane() {
   // UPDATE PLANE COLOR = PLANE COLOR
   const colors = [];
   for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
-    colors.push(0, 0.19, 0.4); // default plane color
+    colors.push(0, 0, 0); // default plane color
   }
 
   planeMesh.geometry.setAttribute(
@@ -87,14 +73,14 @@ document.body.appendChild(renderer.domElement);
 
 // CAMERA CONTROL
 new OrbitControls(camera, renderer.domElement);
-camera.position.z = 50; // how far away from center of 3D Model
+camera.position.z = 150; // how far away from center of 3D Model
 
 scene.add(planeMesh);
 generatePlane();
 
 // CREATING LIGHT/BACKLIGHT
 const light = new THREE.DirectionalLight(0xffffff, 1); // white, max brightness;
-light.position.set(0, -1, 1); // x, y, in front of object;
+light.position.set(0, 0, 1); // x, y, in front of object;
 scene.add(light);
 
 const backlight = new THREE.DirectionalLight(0xffffff, 1); // white, max brightness;
@@ -108,6 +94,7 @@ const mouse = {
 
 // ANIMATE MESH
 let frame = 0;
+
 function animate() {
   requestAnimationFrame(animate); // animation calls on itself
   renderer.render(scene, camera); // animate now
@@ -118,10 +105,10 @@ function animate() {
     planeMesh.geometry.attributes.position;
   for (let i = 0; i < array.length; i += 3) {
     // x
-    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.01;
+    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.03;
     // y
     array[i + 1] =
-      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.001;
+      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.03;
   }
 
   planeMesh.geometry.attributes.position.needsUpdate = true;
@@ -149,13 +136,13 @@ function animate() {
 
     const initialColor = {
       r: 0,
-      g: 0.19,
-      b: 0.4,
+      g: 0,
+      b: 0,
     };
 
     const hoverColor = {
-      r: 0.1,
-      g: 0.5,
+      r: 1,
+      g: 1,
       b: 1,
     };
 
@@ -184,6 +171,21 @@ function animate() {
     }); // .to() takes classes or objects
   }
 }
+
+// CREATE DAT.GUI
+const gui = new GUI();
+const planeFolder = gui.addFolder("Plane"); // create menu
+planeFolder.open(); // default open menu
+
+planeFolder.add(planeParameters, "width", 1, 500).onChange(generatePlane); // adds category
+planeFolder.add(planeParameters, "height", 1, 500).onChange(generatePlane);
+planeFolder
+  .add(planeParameters, "widthSegments", 1, 100)
+  .onChange(generatePlane);
+planeFolder
+  .add(planeParameters, "heightSegments", 1, 100)
+  .onChange(generatePlane);
+
 
 animate();
 
