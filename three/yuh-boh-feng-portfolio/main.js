@@ -64,6 +64,8 @@ planeRightMesh.position.set(250, 0, 0); //(x,y,z)
 planeTopMesh.position.set(0, 250, 0); //(x,y,z)
 planeBottomMesh.position.set(0, -250, 0); //(x,y,z)
 
+console.log(planeBottomMesh, "PBM");
+
 //Create vector 3:
 // const a = new THREE.Vector3( -250, 500, 0 );
 // // const b = new THREE.Vector3( 250, 250, 0 );
