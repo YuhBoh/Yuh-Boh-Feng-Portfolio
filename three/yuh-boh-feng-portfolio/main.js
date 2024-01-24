@@ -64,8 +64,15 @@ planeRightMesh.position.set(250, 0, 0); //(x,y,z)
 planeTopMesh.position.set(0, 250, 0); //(x,y,z)
 planeBottomMesh.position.set(0, -250, 0); //(x,y,z)
 
-console.log(planeBottomMesh, "PBM");
+console.log(planeBottomMesh.parent.position, "POS");
+planeBottomMesh.rotateX(Math.PI / 2);
 
+// let bottomPlane = planeBottomMesh.parent.rotation;
+// bottomPlane.x = Math.PI / 2;
+// console.log(bottomPlane, "BP");
+
+// let leftPlane = planeLeftMesh.parent.rotation;
+// leftPlane.set(Math.PI / 2, 0, 0);
 //Create vector 3:
 // const a = new THREE.Vector3( -250, 500, 0 );
 // // const b = new THREE.Vector3( 250, 250, 0 );
@@ -85,22 +92,17 @@ const light = new THREE.DirectionalLight(0xffffff, 1); // white, max brightness;
 light.position.set(0, 0, 1); // x, y, in front of object;
 scene.add(light);
 
+const light2 = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(0, 1, 0); // light aims top to down;
+scene.add(light2);
+
 const backlight = new THREE.DirectionalLight(0xffffff, 1); // white, max brightness;
 backlight.position.set(0, 0, -1); // x, y, in front of object;
 scene.add(backlight);
 
-// const mouse = {
-//   x: undefined,
-//   y: undefined,
-// };
-
-// ANIMATE MESH
-// let frame = 0;
-
 function animate() {
   requestAnimationFrame(animate); // animation calls on itself
   renderer.render(scene, camera); // animate now
-  // frame += 0.01;
 
 }
 
