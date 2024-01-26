@@ -3,212 +3,27 @@ import { GUI } from "dat.gui";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import gsap from "gsap";
 
-// 1 - CREATING MATERIALS
-const planeMaterial = new THREE.MeshPhongMaterial({
-  side: THREE.DoubleSide, // color side red, color both sides red.
-  flatShading: true,
-  vertexColors: true,
-});
+//Import hooks:
+import useGeneratePlane from "./hooks/useGeneratePlane"
+import usePatternRandomizer from "./hooks/usePatternRandomizer"
 
-const planeGeometry = new THREE.PlaneGeometry(500, 500, 50, 50); // width, height, width segment, height segment
+//functions:
+const doPatternRandomizer = usePatternRandomizer();
 
-// FRONT PLANE
-const frontMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-const planeParameters = frontMesh.geometry.parameters;
+const frontMesh = useGeneratePlane(); //This function should return a new mesh, using the geometry and material provided in useGeneratePlane.js 
+const backMesh = useGeneratePlane();
+const leftMesh = useGeneratePlane();
+const rightMesh = useGeneratePlane();
+const topMesh = useGeneratePlane();
+const botMesh = useGeneratePlane();
 
-// BACK PLANE
-const backMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-const backParameters = frontMesh.geometry.parameters;
-
-// LEFT PLANE
-const leftMesh = frontMesh.clone();
+const frontParameters = frontMesh.geometry.parameters;
+const backParameters = backMesh.geometry.parameters;
 const leftParameters = leftMesh.geometry.parameters;
-
-// RIGHT PLANE
-const rightMesh = frontMesh.clone();
 const rightParameters = rightMesh.geometry.parameters;
+const topParameters = topMesh.geometry.parameters;
+const botParameters = botMesh.geometry.parameters;
 
-// TOP PLANE
-
-// BOTTOM PLANE
-
-// FRONT PLANE GEOMETRY/POSITION
-function generateFrontPlane() {
-  frontMesh.geometry.dispose();
-  frontMesh.geometry = new THREE.PlaneGeometry(
-    planeParameters.width,
-    planeParameters.height,
-    planeParameters.widthSegments,
-    planeParameters.heightSegments
-  );
-
-  frontMesh.position.set(0, 0, -250); //(x,y,z)
-
-  // vertice position randomization
-  const { array } = frontMesh.geometry.attributes.position;
-  const randomValues = [];
-  for (let i = 0; i < array.length; i++) {
-    if (i % 3 === 0) {
-      const x = array[i];
-      const y = array[i + 1];
-      const z = array[i + 2];
-
-      array[i] = x + (Math.random() - 0.5) * 3;
-      array[i + 1] = y + (Math.random() - 0.5) * 3;
-      array[i + 2] = z + (Math.random() - 0.5) * 3;
-    }
-    randomValues.push(Math.random() * Math.PI * 2);
-  }
-  frontMesh.geometry.attributes.position.randomValues = randomValues;
-
-  frontMesh.geometry.attributes.position.originalPosition =
-    frontMesh.geometry.attributes.position.array;
-
-  // UPDATE PLANE COLOR = PLANE COLOR
-  const colors = [];
-  for (let i = 0; i < frontMesh.geometry.attributes.position.count; i++) {
-    colors.push(0, 0, 1); // default front color
-  }
-
-  frontMesh.geometry.setAttribute(
-    "color",
-    new THREE.BufferAttribute(new Float32Array(colors), 3)
-  );
-}
-
-// BACK PLANE GEOMETRY/POSITION
-function generateBackPlane() {
-  backMesh.geometry.dispose();
-  backMesh.geometry = new THREE.PlaneGeometry(
-    backParameters.width,
-    backParameters.height,
-    backParameters.widthSegments,
-    backParameters.heightSegments
-  );
-
-  backMesh.position.set( 0, 0, 250); //(x,y,z)
-
-  // vertice position randomization
-  const { array } = backMesh.geometry.attributes.position;
-  const randomValues = [];
-  for (let i = 0; i < array.length; i++) {
-    if (i % 3 === 0) {
-      const x = array[i];
-      const y = array[i + 1];
-      const z = array[i + 2];
-
-      array[i] = x + (Math.random() - 0.5) * 3;
-      array[i + 1] = y + (Math.random() - 0.5) * 3;
-      array[i + 2] = z + (Math.random() - 0.5) * 3;
-    }
-    randomValues.push(Math.random() * Math.PI * 2);
-  }
-  backMesh.geometry.attributes.position.randomValues = randomValues;
-
-  backMesh.geometry.attributes.position.originalPosition =
-    backMesh.geometry.attributes.position.array;
-
-  // UPDATE PLANE COLOR = PLANE COLOR
-  const colors = [];
-  for (let i = 0; i < backMesh.geometry.attributes.position.count; i++) {
-    colors.push(0, 0, 1); // default back color
-  }
-
-  backMesh.geometry.setAttribute(
-    "color",
-    new THREE.BufferAttribute(new Float32Array(colors), 3)
-  );
-}
-
-// LEFT PLANE GEOMETRY/POSITION
-function generateLeftPlane() {
-  leftMesh.geometry.dispose();
-  leftMesh.geometry = new THREE.PlaneGeometry(
-    leftParameters.width,
-    leftParameters.height,
-    leftParameters.widthSegments,
-    leftParameters.heightSegments
-  );
-
-  leftMesh.position.set(-250, 0, 0); //(x,y,z)
-  leftMesh.rotateY(Math.PI / 2);
-
-  // vertice position randomization
-  const { array } = leftMesh.geometry.attributes.position;
-  const randomValues = [];
-  for (let i = 0; i < array.length; i++) {
-    if (i % 3 === 0) {
-      const x = array[i];
-      const y = array[i + 1];
-      const z = array[i + 2];
-
-      array[i] = x + (Math.random() - 0.5) * 3;
-      array[i + 1] = y + (Math.random() - 0.5) * 3;
-      array[i + 2] = z + (Math.random() - 0.5) * 3;
-    }
-    randomValues.push(Math.random() * Math.PI * 2);
-  }
-  leftMesh.geometry.attributes.position.randomValues = randomValues;
-
-  leftMesh.geometry.attributes.position.originalPosition =
-    leftMesh.geometry.attributes.position.array;
-
-  // UPDATE PLANE COLOR = PLANE COLOR
-  const colors = [];
-  for (let i = 0; i < leftMesh.geometry.attributes.position.count; i++) {
-    colors.push(0, 0, 1); // default left color
-  }
-
-  leftMesh.geometry.setAttribute(
-    "color",
-    new THREE.BufferAttribute(new Float32Array(colors), 3)
-  );
-}
-
-// RIGHT PLANE GEOMETRY/POSITION
-function generateRightPlane() {
-  rightMesh.geometry.dispose();
-  rightMesh.geometry = new THREE.PlaneGeometry(
-    rightParameters.width,
-    rightParameters.height,
-    rightParameters.widthSegments,
-    rightParameters.heightSegments
-  );
-
-  rightMesh.position.set(250, 0, 0); //(x,y,z)
-  rightMesh.rotateY(Math.PI / 2);
-
-  // vertice position randomization
-  const { array } = rightMesh.geometry.attributes.position;
-  const randomValues = [];
-  for (let i = 0; i < array.length; i++) {
-    if (i % 3 === 0) {
-      const x = array[i];
-      const y = array[i + 1];
-      const z = array[i + 2];
-
-      array[i] = x + (Math.random() - 0.5) * 3;
-      array[i + 1] = y + (Math.random() - 0.5) * 3;
-      array[i + 2] = z + (Math.random() - 0.5) * 3;
-    }
-    randomValues.push(Math.random() * Math.PI * 2);
-  }
-  rightMesh.geometry.attributes.position.randomValues = randomValues;
-
-  rightMesh.geometry.attributes.position.originalPosition =
-    rightMesh.geometry.attributes.position.array;
-
-  // UPDATE PLANE COLOR = PLANE COLOR
-  const colors = [];
-  for (let i = 0; i < rightMesh.geometry.attributes.position.count; i++) {
-    colors.push(0, 0, 1); // default right color
-  }
-
-  rightMesh.geometry.setAttribute(
-    "color",
-    new THREE.BufferAttribute(new Float32Array(colors), 3)
-  );
-};
 
 const raycaster = new THREE.Raycaster();
 const scene = new THREE.Scene();
@@ -230,10 +45,11 @@ new OrbitControls(camera, renderer.domElement);
 camera.position.z = 150; // how far away from center of 3D Model
 
 // CALLING ALL PLANE FUNCTIONS
-generateFrontPlane();
-generateBackPlane();
-generateLeftPlane();
-generateRightPlane();
+doPatternRandomizer(frontMesh, 'front');
+doPatternRandomizer(backMesh, 'back');
+doPatternRandomizer(leftMesh, 'left');
+doPatternRandomizer(rightMesh, 'right');
+
 
 // RENDER PLANES
 scene.add(frontMesh, leftMesh, backMesh, rightMesh);
