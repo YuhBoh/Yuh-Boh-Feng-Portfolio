@@ -3,7 +3,7 @@ import { GUI } from "dat.gui";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import gsap from "gsap";
 
-export function forwardMesh() {
+export function leftwardMesh() {
   // 1 - CREATING PLANE
   const planeMaterial = new THREE.MeshPhongMaterial({
     side: THREE.DoubleSide, // color side red, color both sides red.
@@ -12,21 +12,24 @@ export function forwardMesh() {
   });
 
   const planeGeometry = new THREE.PlaneGeometry(500, 500, 50, 50); // width, height, width segment, height segment
-  const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial);
-  const planeParameters = planeMesh.geometry.parameters;
+  const leftMesh = new THREE.Mesh(planeGeometry, planeMaterial);
+  const planeParameters = leftMesh.geometry.parameters;
 
   // CREATE PLANE
   function generatePlane() {
-    planeMesh.geometry.dispose();
-    planeMesh.geometry = new THREE.PlaneGeometry(
+    leftMesh.geometry.dispose();
+    leftMesh.geometry = new THREE.PlaneGeometry(
       planeParameters.width,
       planeParameters.height,
       planeParameters.widthSegments,
       planeParameters.heightSegments
     );
 
+    leftMesh.position.set(-250, 0, 0);
+    leftMesh.rotateY(Math.PI / 2);
+
     // vertice position randomization
-    const { array } = planeMesh.geometry.attributes.position;
+    const { array } = leftMesh.geometry.attributes.position;
     const randomValues = [];
     for (let i = 0; i < array.length; i++) {
       if (i % 3 === 0) {
@@ -40,18 +43,18 @@ export function forwardMesh() {
       }
       randomValues.push(Math.random() * Math.PI * 2);
     }
-    planeMesh.geometry.attributes.position.randomValues = randomValues;
+    leftMesh.geometry.attributes.position.randomValues = randomValues;
 
-    planeMesh.geometry.attributes.position.originalPosition =
-      planeMesh.geometry.attributes.position.array;
+    leftMesh.geometry.attributes.position.originalPosition =
+      leftMesh.geometry.attributes.position.array;
 
     // UPDATE PLANE COLOR = PLANE COLOR
     const colors = [];
-    for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
-      colors.push(0, 0, 0); // default plane color
+    for (let i = 0; i < leftMesh.geometry.attributes.position.count; i++) {
+      colors.push(0, 0, 1); // default plane color
     }
 
-    planeMesh.geometry.setAttribute(
+    leftMesh.geometry.setAttribute(
       "color",
       new THREE.BufferAttribute(new Float32Array(colors), 3)
     );
@@ -74,14 +77,14 @@ export function forwardMesh() {
 
   // CAMERA CONTROL
   new OrbitControls(camera, renderer.domElement);
-  camera.position.z = 150; // how far away from center of 3D Model
+  camera.position.z = 1; // how far away from center of 3D Model
 
-  scene.add(planeMesh);
+  scene.add(leftMesh);
   generatePlane();
 
   // CREATING LIGHT/BACKLIGHT
   const light = new THREE.DirectionalLight(0xffffff, 1); // white, max brightness;
-  light.position.set(0, 0, 1); // x, y, in front of object;
+  light.position.set(1, 0, 0); // x, y, in front of object;
   scene.add(light);
 
   const backlight = new THREE.DirectionalLight(0xffffff, 1); // white, max brightness;
@@ -103,7 +106,7 @@ export function forwardMesh() {
     frame += 0.01;
 
     const { array, originalPosition, randomValues } =
-      planeMesh.geometry.attributes.position;
+      leftMesh.geometry.attributes.position;
     for (let i = 0; i < array.length; i += 3) {
       // x
       array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.03;
@@ -112,9 +115,9 @@ export function forwardMesh() {
         originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.03;
     }
 
-    planeMesh.geometry.attributes.position.needsUpdate = true;
+    leftMesh.geometry.attributes.position.needsUpdate = true;
 
-    const intersects = raycaster.intersectObject(planeMesh);
+    const intersects = raycaster.intersectObject(leftMesh);
     if (intersects.length > 0) {
       const { color } = intersects[0].object.geometry.attributes;
 
@@ -187,11 +190,10 @@ export function forwardMesh() {
     .add(planeParameters, "heightSegments", 1, 100)
     .onChange(generatePlane);
 
-
   animate();
 
   addEventListener("mousemove", (event) => {
     mouse.x = (event.clientX / innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / innerHeight) * 2 + 1;
   });
-};
+}

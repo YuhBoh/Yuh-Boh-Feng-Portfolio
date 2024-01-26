@@ -3,7 +3,7 @@ import { GUI } from "dat.gui";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import gsap from "gsap";
 
-export function backwardMesh() {
+export function planeMesh() {
   // 1 - CREATING PLANE
   const planeMaterial = new THREE.MeshPhongMaterial({
     side: THREE.DoubleSide, // color side red, color both sides red.
@@ -24,6 +24,8 @@ export function backwardMesh() {
       planeParameters.widthSegments,
       planeParameters.heightSegments
     );
+
+    planeMesh.position.set(0, 0, 250);
 
     // vertice position randomization
     const { array } = planeMesh.geometry.attributes.position;
@@ -48,7 +50,7 @@ export function backwardMesh() {
     // UPDATE PLANE COLOR = PLANE COLOR
     const colors = [];
     for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
-      colors.push(0, 0, 0); // default plane color
+      colors.push(0, 0, 1); // default plane color
     }
 
     planeMesh.geometry.setAttribute(
@@ -74,7 +76,7 @@ export function backwardMesh() {
 
   // CAMERA CONTROL
   new OrbitControls(camera, renderer.domElement);
-  camera.position.z = 150; // how far away from center of 3D Model
+  camera.position.z = 1; // how far away from center of 3D Model
 
   scene.add(planeMesh);
   generatePlane();
@@ -173,19 +175,20 @@ export function backwardMesh() {
     }
   }
 
-  // CREATE DAT.GUI
-  const gui = new GUI();
-  const planeFolder = gui.addFolder("Plane"); // create menu
-  planeFolder.open(); // default open menu
+  // // CREATE DAT.GUI
+  // const gui = new GUI();
+  // const planeFolder = gui.addFolder("Plane"); // create menu
+  // planeFolder.open(); // default open menu
 
-  planeFolder.add(planeParameters, "width", 1, 500).onChange(generatePlane); // adds category
-  planeFolder.add(planeParameters, "height", 1, 500).onChange(generatePlane);
-  planeFolder
-    .add(planeParameters, "widthSegments", 1, 100)
-    .onChange(generatePlane);
-  planeFolder
-    .add(planeParameters, "heightSegments", 1, 100)
-    .onChange(generatePlane);
+  // planeFolder.add(planeParameters, "width", 1, 500).onChange(generatePlane); // adds category
+  // planeFolder.add(planeParameters, "height", 1, 500).onChange(generatePlane);
+  // planeFolder
+  //   .add(planeParameters, "widthSegments", 1, 100)
+  //   .onChange(generatePlane);
+  // planeFolder
+  //   .add(planeParameters, "heightSegments", 1, 100)
+  //   .onChange(generatePlane);
+
 
   animate();
 
