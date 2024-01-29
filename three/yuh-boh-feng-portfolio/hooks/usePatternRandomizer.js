@@ -83,5 +83,5 @@ export default function usePatternRandomizer() {
       new THREE.BufferAttribute(new Float32Array(colors), 3)
     );
   }
-  return  doPatternRandomizer;
+  return  doPatternRandomizer
 }
