@@ -6,7 +6,7 @@ import gsap from "gsap";
 //Import hooks:
 import useGeneratePlane from "./hooks/useGeneratePlane"
 import usePatternRandomizer from "./hooks/usePatternRandomizer"
-import useLights from "./hooks/lightGenerator";
+import useLights from "./hooks/useLights";
 
 //functions:
 const doPatternRandomizer = usePatternRandomizer();
@@ -53,8 +53,8 @@ doPatternRandomizer(rightMesh, 'right');
 // RENDER PLANES
 scene.add(frontMesh, leftMesh, backMesh, rightMesh);
 
-// CREATING/CALLING LIGHT
-// function light() {
+// // CREATING/CALLING LIGHT
+// function lights() {
 //   const frontLight = new THREE.DirectionalLight(0xffffff, 1); // white, max brightness;
 //   frontLight.position.set(0, 0, 1); // x, y, in front of object;
 
