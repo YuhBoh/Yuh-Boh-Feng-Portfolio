@@ -53,29 +53,29 @@ doPatternRandomizer(rightMesh, 'right');
 // RENDER PLANES
 scene.add(frontMesh, leftMesh, backMesh, rightMesh);
 
-// // CREATING/CALLING LIGHT
-// function lights() {
-//   const frontLight = new THREE.DirectionalLight(0xffffff, 1); // white, max brightness;
-//   frontLight.position.set(0, 0, 1); // x, y, in front of object;
+// CREATING/CALLING LIGHT
+function lights() {
+  const frontLight = new THREE.DirectionalLight(0xffffff, 1); // white, max brightness;
+  frontLight.position.set(0, 0, 1); // x, y, in front of object;
 
-//   const backLight = new THREE.DirectionalLight(0xffffff, 1);
-//   backLight.position.set(0, 0, -1); // light aims backwards
+  const backLight = new THREE.DirectionalLight(0xffffff, 1);
+  backLight.position.set(0, 0, -1); // light aims backwards
 
-//   const botLight = new THREE.DirectionalLight(0xffffff, 1);
-//   botLight.position.set(0, 1, 0); // light aims down;
+  const botLight = new THREE.DirectionalLight(0xffffff, 1);
+  botLight.position.set(0, 1, 0); // light aims down;
 
-//   const topLight = new THREE.DirectionalLight(0xffffff, 1);
-//   topLight.position.set(0, -1, 0); // light aims up
+  const topLight = new THREE.DirectionalLight(0xffffff, 1);
+  topLight.position.set(0, -1, 0); // light aims up
 
-//   const leftLight = new THREE.DirectionalLight(0xffffff, 1);
-//   leftLight.position.set(1, 0, 0); // light aims left
+  const leftLight = new THREE.DirectionalLight(0xffffff, 1);
+  leftLight.position.set(1, 0, 0); // light aims left
 
-//   const rightLight = new THREE.DirectionalLight(0xffffff, 1);
-//   rightLight.position.set(-1, 0, 0); // light aims right
+  const rightLight = new THREE.DirectionalLight(0xffffff, 1);
+  rightLight.position.set(-1, 0, 0); // light aims right
 
-//   scene.add(frontLight, backLight, leftLight, rightLight, topLight, botLight);
-// };
-useLights();
+  scene.add(frontLight, backLight, leftLight, rightLight, topLight, botLight);
+};
+lights();
 
 const mouse = {
   x: undefined,
@@ -160,7 +160,7 @@ function frontAnimate() {
       },
     }); // .to() takes classes or objects
   }
-}
+};
 
 // ANIMATE BACK PLANE
 function backAnimate() {
