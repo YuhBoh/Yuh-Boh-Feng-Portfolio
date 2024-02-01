@@ -160,7 +160,7 @@ function frontAnimate() {
       },
     }); // .to() takes classes or objects
   }
-};
+}
 
 // ANIMATE BACK PLANE
 function backAnimate() {
