@@ -44,9 +44,11 @@ export default function usePatternRandomizer() {
         break ;
     case 'top':
         mesh.position.set(0, 250, 0); //(x,y,z)
+        mesh.rotateX(Math.PI / 2);
         break ;
     case 'bot':
         mesh.position.set(0, -250, 0); //(x,y,z)
+        mesh.rotateX(Math.PI / 2);
         break ;
     default:
         break;

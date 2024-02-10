@@ -320,7 +320,7 @@ function leftAnimate() {
   }
 }
 
-// ANIME RIGHT PLANE
+// ANIMATE RIGHT PLANE
 function rightAnimate() {
   requestAnimationFrame(rightAnimate); // animation calls on itself
   renderer.render(scene, camera); // animate now
