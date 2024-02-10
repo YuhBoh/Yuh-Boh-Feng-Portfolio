@@ -398,6 +398,7 @@ function rightAnimate() {
   }
 }
 
+// ANIMATE TOP PLANE
 function topAnimate() {
   requestAnimationFrame(rightAnimate); // animation calls on itself
   renderer.render(scene, camera); // animate now
@@ -405,7 +406,7 @@ function topAnimate() {
   frame += 0.01;
 
   const { array, originalPosition, randomValues } =
-    rightMesh.geometry.attributes.position;
+    topMesh.geometry.attributes.position;
   for (let i = 0; i < array.length; i += 3) {
     // x
     array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.03;
@@ -414,9 +415,86 @@ function topAnimate() {
       originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.03;
   }
 
-  rightMesh.geometry.attributes.position.needsUpdate = true;
+  topMesh.geometry.attributes.position.needsUpdate = true;
 
-  const intersects = raycaster.intersectObject(rightMesh);
+  const intersects = raycaster.intersectObject(topMesh);
+  if (intersects.length > 0) {
+    const { color } = intersects[0].object.geometry.attributes;
+
+    // vertice 1
+    color.setX(intersects[0].face.a, 0.1);
+    color.setY(intersects[0].face.a, 0.5);
+    color.setZ(intersects[0].face.a, 1);
+
+    // vertice 2
+    color.setX(intersects[0].face.b, 0.1);
+    color.setY(intersects[0].face.b, 0.5);
+    color.setZ(intersects[0].face.b, 1);
+
+    // vertice 3
+    color.setX(intersects[0].face.c, 0.1);
+    color.setY(intersects[0].face.c, 0.5);
+    color.setZ(intersects[0].face.c, 1);
+
+    intersects[0].object.geometry.attributes.color.needsUpdate = true;
+
+    const initialColor = {
+      r: 0,
+      g: 0,
+      b: 0,
+    };
+
+    const hoverColor = {
+      r: 1,
+      g: 1,
+      b: 1,
+    };
+
+    gsap.to(hoverColor, {
+      r: initialColor.r,
+      g: initialColor.g,
+      b: initialColor.b,
+      duration: 1,
+      onUpdate: () => {
+        // vertice 1
+        color.setX(intersects[0].face.a, hoverColor.r);
+        color.setY(intersects[0].face.a, hoverColor.g);
+        color.setZ(intersects[0].face.a, hoverColor.b);
+
+        // vertice 2
+        color.setX(intersects[0].face.b, hoverColor.r);
+        color.setY(intersects[0].face.b, hoverColor.g);
+        color.setZ(intersects[0].face.b, hoverColor.b);
+
+        // vertice 3
+        color.setX(intersects[0].face.c, hoverColor.r);
+        color.setY(intersects[0].face.c, hoverColor.g);
+        color.setZ(intersects[0].face.c, hoverColor.b);
+        color.needsUpdate = true;
+      },
+    }); // .to() takes classes or objects
+  }
+}
+
+function botAnimate() {
+  requestAnimationFrame(botAnimate); // animation calls on itself
+  renderer.render(scene, camera); // animate now
+  raycaster.setFromCamera(mouse, camera);
+  frame += 0.01;
+
+  const { array, originalPosition, randomValues } =
+    botMesh.geometry.attributes.position;
+  for (let i = 0; i < array.length; i += 3) {
+    // x
+    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * .03;
+    // y
+    array[i + 1] =
+      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * .03;
+  }
+
+  botMesh.geometry.attributes.position.needsUpdate = true;
+
+  const intersects = raycaster.intersectObject(botMesh);
   if (intersects.length > 0) {
     const { color } = intersects[0].object.geometry.attributes;
 
@@ -496,6 +574,7 @@ backAnimate();
 leftAnimate();
 rightAnimate();
 topAnimate();
+botAnimate();
 
 addEventListener("mousemove", (event) => {
   mouse.x = (event.clientX / innerWidth) * 2 - 1;
