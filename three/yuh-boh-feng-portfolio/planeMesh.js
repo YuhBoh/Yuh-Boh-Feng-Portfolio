@@ -46,7 +46,7 @@ import gsap from "gsap";
     // UPDATE PLANE COLOR = PLANE COLOR
     const colors = [];
     for (let i = 0; i < planeMesh.geometry.attributes.position.count; i++) {
-      colors.push(0, 0, 1); // default plane color
+      colors.push(1, 1, 1); // default plane color
     }
 
     planeMesh.geometry.setAttribute(

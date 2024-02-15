@@ -6,7 +6,6 @@ import gsap from "gsap";
 //Import hooks:
 import useGeneratePlane from "./hooks/useGeneratePlane"
 import usePatternRandomizer from "./hooks/usePatternRandomizer"
-import useLights from "./hooks/useLights";
 
 //functions:
 const doPatternRandomizer = usePatternRandomizer();
@@ -42,7 +41,7 @@ document.body.appendChild(renderer.domElement);
 
 // CAMERA CONTROL
 new OrbitControls(camera, renderer.domElement);
-camera.position.z = 150; // how far away from center of 3D Model
+camera.position.z = 70; // how far away from center of 3D Model
 
 // CALLING ALL PLANE FUNCTIONS
 doPatternRandomizer(frontMesh, 'front');
@@ -97,10 +96,10 @@ function frontAnimate() {
     frontMesh.geometry.attributes.position;
   for (let i = 0; i < array.length; i += 3) {
     // x
-    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.03;
+    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.08;
     // y
     array[i + 1] =
-      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.03;
+      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.08;
   }
 
   frontMesh.geometry.attributes.position.needsUpdate = true;
@@ -175,10 +174,10 @@ function backAnimate() {
     backMesh.geometry.attributes.position;
   for (let i = 0; i < array.length; i += 3) {
     // x
-    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.03;
+    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.08;
     // y
     array[i + 1] =
-      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.03;
+      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.08;
   }
 
   backMesh.geometry.attributes.position.needsUpdate = true;
@@ -253,10 +252,10 @@ function leftAnimate() {
     leftMesh.geometry.attributes.position;
   for (let i = 0; i < array.length; i += 3) {
     // x
-    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.03;
+    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.08;
     // y
     array[i + 1] =
-      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.03;
+      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.08;
   }
 
   leftMesh.geometry.attributes.position.needsUpdate = true;
@@ -331,10 +330,10 @@ function rightAnimate() {
     rightMesh.geometry.attributes.position;
   for (let i = 0; i < array.length; i += 3) {
     // x
-    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.03;
+    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.08;
     // y
     array[i + 1] =
-      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.03;
+      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.08;
   }
 
   rightMesh.geometry.attributes.position.needsUpdate = true;
@@ -409,10 +408,10 @@ function topAnimate() {
     topMesh.geometry.attributes.position;
   for (let i = 0; i < array.length; i += 3) {
     // x
-    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.03;
+    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * 0.08;
     // y
     array[i + 1] =
-      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.03;
+      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * 0.08;
   }
 
   topMesh.geometry.attributes.position.needsUpdate = true;
@@ -476,6 +475,7 @@ function topAnimate() {
   }
 }
 
+// ANIMATE BOT PLANE
 function botAnimate() {
   requestAnimationFrame(botAnimate); // animation calls on itself
   renderer.render(scene, camera); // animate now
@@ -486,10 +486,10 @@ function botAnimate() {
     botMesh.geometry.attributes.position;
   for (let i = 0; i < array.length; i += 3) {
     // x
-    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * .03;
+    array[i] = originalPosition[i] + Math.cos(frame + randomValues[i]) * .08;
     // y
     array[i + 1] =
-      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * .03;
+      originalPosition[i + 1] + Math.sin(frame + randomValues[i + 1]) * .08;
   }
 
   botMesh.geometry.attributes.position.needsUpdate = true;

@@ -77,7 +77,7 @@ export default function usePatternRandomizer() {
     // UPDATE PLANE COLOR = PLANE COLOR
     const colors = [];
     for (let i = 0; i < mesh.geometry.attributes.position.count; i++) {
-      colors.push(0, 0, 1); // default front color
+      colors.push(2, 2, 2); // DEFAULT PLANE COLOR
     }
 
     mesh.geometry.setAttribute(

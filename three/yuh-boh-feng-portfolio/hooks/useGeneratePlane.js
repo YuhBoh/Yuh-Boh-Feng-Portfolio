@@ -5,7 +5,7 @@ export default function useGeneratePlane() {
 
     // 1 - CREATING MATERIALS
     const planeMaterial = new THREE.MeshPhongMaterial({
-        side: THREE.DoubleSide, // color side red, color both sides red.
+        side: THREE.DoubleSide, // color side, color both sides.
         flatShading: true,
         vertexColors: true,
     });
